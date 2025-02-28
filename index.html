@@ -7,13 +7,12 @@
 </head>
 <body>
     <button onclick="saveContact()">Save Contact</button>
-    <button onclick="openContact()">Open Contact</button>
 
     <script>
-        const name = "John Doe";
-        const phone = "+1234567890";
-
         function saveContact() {
+            const name = "John Doe";
+            const phone = "+1234567890";
+
             // Create vCard content
             const vCardData = `BEGIN:VCARD
 VERSION:3.0
@@ -21,9 +20,11 @@ FN:${name}
 TEL:${phone}
 END:VCARD`;
 
-            // Create a Blob and download link
+            // Create a Blob for the vCard
             const blob = new Blob([vCardData], { type: "text/vcard" });
             const url = URL.createObjectURL(blob);
+
+            // Create an invisible download link
             const a = document.createElement("a");
             a.href = url;
             a.download = "contact.vcf";
@@ -32,12 +33,10 @@ END:VCARD`;
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            alert("Contact saved! Open the .vcf file to add it.");
-        }
-
-        function openContact() {
-            // Open the contact number in the Contacts app
-            window.location.href = `tel:${phone}`;
+            // Open the contacts app (works on Android)
+            setTimeout(() => {
+                window.location.href = "content://com.android.contacts/contacts";
+            }, 2000); // Delay to ensure file is downloaded first
         }
     </script>
 </body>
