@@ -7,12 +7,13 @@
 </head>
 <body>
     <button onclick="saveContact()">Save Contact</button>
+    <button onclick="openDialer()">Call Contact</button>
 
     <script>
-        function saveContact() {
-            const name = "John Doe";
-            const phone = "+1234567890";
+        const name = "John Doe11";
+        const phone = "+1111111111";
 
+        function saveContact() {
             // Create vCard content
             const vCardData = `BEGIN:VCARD
 VERSION:3.0
@@ -33,10 +34,15 @@ END:VCARD`;
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            // Open the contacts app (works on Android)
-            setTimeout(() => {
-                window.location.href = "content://com.android.contacts/contacts";
-            }, 2000); // Delay to ensure file is downloaded first
+            alert("Contact saved! Open the .vcf file to add it.");
+			setTimeout(() => {
+				openDialer()
+			}, 2000);
+        }
+
+        function openDialer() {
+            // Open the dialer with the saved number
+            window.location.href = `tel:${phone}`;
         }
     </script>
 </body>
